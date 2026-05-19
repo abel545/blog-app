@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>블로그</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">📝 MyBlog</a>
+      <a href="/write" class="btn btn--primary">+ 글쓰기</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <div class="page-header">
+      <div class="badge badge--purple">BLOG</div>
+      <h1>전체 게시물</h1>
+      <p>누구나 자유롭게 글을 남길 수 있어요</p>
+    </div>
+
+    {% if posts %}
+      <div class="post-list">
+        {% for post in posts %}
+        <a href="/post/{{ post['번호'] }}" class="post-card">
+          <div class="post-meta">
+            <span class="post-category">{{ post['카테고리'] or '일반' }}</span>
+            <span class="post-date">{{ post['타임스탬프'][:10] }}</span>
+          </div>
+          <h2 class="post-title">{{ post['제목'] }}</h2>
+          <p class="post-excerpt">{{ post['내용'][:100] }}{% if post['내용']|length > 100 %}...{% endif %}</p>
+          <div class="post-footer">
+            <span class="post-author">✍️ {{ post['작성자'] }}</span>
+            <span class="post-views">👁 {{ post['조회수'] }}</span>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">🗒️</div>
+        <p>아직 게시물이 없어요.<br>첫 번째 글을 작성해보세요!</p>
+        <a href="/write" class="btn btn--primary" style="margin-top:20px;">글쓰기</a>
+      </div>
+    {% endif %}
+
+  </div>
+
+</body>
+</html>
