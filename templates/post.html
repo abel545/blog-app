@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ post['제목'] }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">📝 MyBlog</a>
+      <a href="/" class="btn btn--outline">← 목록으로</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="post-detail">
+
+      <div class="post-detail-meta">
+        <span class="post-category">{{ post['카테고리'] or '일반' }}</span>
+        <span class="post-date">{{ post['타임스탬프'] }}</span>
+      </div>
+
+      <h1 class="post-detail-title">{{ post['제목'] }}</h1>
+
+      <div class="post-detail-info">
+        <span>✍️ {{ post['작성자'] }}</span>
+        <span>👁 조회 {{ post['조회수'] }}회</span>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="post-detail-content">
+        {{ post['내용'] | replace('\n', '<br>') | safe }}
+      </div>
+
+      <hr class="divider" />
+
+      <div class="post-actions">
+        <a href="/" class="btn btn--outline">← 목록으로</a>
+        <form action="/delete/{{ post['번호'] }}" method="POST"
+              onsubmit="return confirm('정말 삭제하시겠습니까?')">
+          <button type="submit" class="btn btn--danger">🗑 삭제</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
